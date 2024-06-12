@@ -40,7 +40,7 @@ let userId = null;
 
 // Function to update points
 function updatePoints() {
-  pontos += 20;
+  pontos += 40;
   pontosElement.textContent = `${pontos} Pontos`;
   // Save points to Firebase
   set(ref(database, `users/${userId}/points`), {
@@ -93,7 +93,7 @@ function loadUserData() {
 // Submit answer
 submitButton.addEventListener("click", function () {
   const answer = answerInput.value.toLowerCase();
-  if (answer === "beijo") {
+  if (answer == "mãos" | answer == "mãos dadas") {
     if (!acertou) {
       resultElement.textContent = "Resposta correta!";
       resultElement.style.color = "green";
@@ -110,7 +110,7 @@ submitButton.addEventListener("click", function () {
       resultElement.style.color = "blue";
     }
   } else {
-    resultElement.textContent = "Resposta incorreta. Tente novamente!";
+    resultElement.textContent = "Resposta não é essa amor";
     resultElement.style.color = "red";
   }
 });
