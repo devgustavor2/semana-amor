@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body{
+  background-color: #050505 ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  font-family: 'Poppins';
+  color: #fff;
+}
+
+nav{
+  display: flex;
+  justify-content: space-between;
+  gap: 6rem;
+  margin-top: 1rem;
+}
+
+.test{
+  color: #050505;
+}
+
+.icons-heart{
+  margin-top: 1rem;
+  width: 2rem;
+}
+
+.pontuacao{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+
+  padding: 0.3rem;
+
+  border: 0.2rem;
+  border-color: #fff;
+  border-style: solid;
+  border-radius: 0.5rem;
+
+}
+
+.pontuacao-img{
+  width: 1rem;
+  margin-right: 0.3rem;
+}
+
+.g-r{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.pergunta{
+  margin-top: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.resposta{
+  border: transparent;
+  background-color: #050505;
+  color: #fff;
+  border-bottom: 0.1rem solid #fff;
+
+  width: 17rem;
+  margin-top: 1rem;
+}
+
+.enviar{
+  color: #fff;
+  margin-top: 1rem;
+  background-color: #4c7c3d;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+}
+
+#result{
+  margin-top: 1rem;
+}
