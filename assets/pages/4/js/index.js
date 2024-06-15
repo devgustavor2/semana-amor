@@ -93,7 +93,7 @@ function loadUserData() {
 // Submit answer
 submitButton.addEventListener("click", function () {
   const answer = answerInput.value.toLowerCase();
-  if (answer == "o amor suporta") {
+  if (answer == "o amor tudo suporta") {
     if (!acertou) {
       resultElement.textContent = "E assim no dia de hoje eu continuo essa nossa 4° Carta por aqui, provavelmente eu ainda nem conversei com você o que veio eu meu coração, então invés de falar por aqui prefiro eu msm te contar o que aconteceu";
       resultElement.style.color = "green";
