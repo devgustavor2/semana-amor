@@ -95,7 +95,7 @@ submitButton.addEventListener("click", function () {
   const answer = answerInput.value.toLowerCase();
   if (answer === "beijo") {
     if (!acertou) {
-      resultElement.textContent = "Resposta correta!";
+      resultElement.textContent = "Eu";
       resultElement.style.color = "green";
       // Save to Firebase
       saveAnswer(answer);
