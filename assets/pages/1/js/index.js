@@ -106,7 +106,7 @@ submitButton.addEventListener("click", function () {
         acertou: true,
       });
     } else {
-      resultElement.textContent = "Você já acertou este enigma amorr!";
+      resultElement.textContent = "Eu";
       resultElement.style.color = "blue";
     }
   } else {
