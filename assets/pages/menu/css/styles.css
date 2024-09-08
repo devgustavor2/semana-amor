@@ -39,7 +39,6 @@ nav{
   border-color: #fff;
   border-style: solid;
   border-radius: 0.5rem;
-
 }
 
 .pontuacao-img{
@@ -47,46 +46,38 @@ nav{
   margin-right: 0.3rem;
 }
 
-.g-r{
+.enigma-1{
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 1rem;
-}
+  margin-top: 50%;
 
-.pergunta{
-  margin-top: 40%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
+  border: 0.3rem solid #fff;
+  border-radius: 0.5rem;
 
-.resposta{
-  border: transparent;
-  background-color: #050505;
-  color: #fff;
-  border-bottom: 0.1rem solid #fff;
-
-  width: 17rem;
-  margin-top: 1rem;
-}
-
-.enviar{
-  color: #fff;
-  margin-top: 1rem;
-  background-color: #4c7c3d;
-  padding: 0.5rem;
-  border-radius: 0.3rem;
-}
-
-#result{
-  margin-top: 1rem;
-}
-
-.img{
-  margin-top: 2rem;
   width: 20rem;
-  height:auto;
+  height: 2rem;
+
+  color: #fff;
+
+  text-decoration: none;
+}
+
+.enigma-2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1rem;
+
+  border: 0.3rem solid #fff;
+  border-radius: 0.5rem;
+
+  width: 20rem;
+  height: 2rem;
+
+  color: #fff;
+
+  text-decoration: none;
 }

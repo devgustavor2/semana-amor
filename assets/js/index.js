@@ -1,19 +1,7 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInAnonymously,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {
-  child,
-  get,
-  getDatabase,
-  push,
-  ref,
-  set,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
-// Your web app's Firebase configuration
+// Configuração do Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDZJvocXDQMXV77rnltyjtsnTm0Cz4vWR8",
   authDomain: "projeto-gr-7cd24.firebaseapp.com",
@@ -23,100 +11,48 @@ const firebaseConfig = {
   appId: "1:136857124362:web:c4167a542ccc7fca99a9f3",
 };
 
-// Initialize Firebase
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const database = getDatabase(app);
+const auth = getAuth(app);
 
-// Get elements
-const answerInput = document.getElementById("resposta");
-const submitButton = document.getElementById("enviar");
-const resultElement = document.getElementById("result");
-const pontosElement = document.getElementById("pontos");
+// Obter os elementos de entrada de email e senha
+const emailInput = document.querySelector('#email');
+const passwordInput = document.querySelector('#password');
 
-let pontos = 0;
-let acertou = false;
-let userId = null;
+// Função de login com email e senha
+document.querySelector('#loginForm').addEventListener('submit', (event) => {
+  event.preventDefault();  // Prevenir o envio padrão do formulário
 
-// Function to update points
-function updatePoints() {
-  pontos += 20;
-  pontosElement.textContent = `${pontos} Pontos`;
-  // Save points to Firebase
-  set(ref(database, `users/${userId}/points`), {
-    pontos: pontos,
-  });
-}
+  // Extrair os valores dos campos de entrada
+  const email = emailInput.value;
+  const password = passwordInput.value;
 
-// Sign in anonymously and load points
-signInAnonymously(auth)
-  .then(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        userId = user.uid;
-        loadUserData();
-      }
-    });
-  })
-  .catch((error) => {
-    console.error("Error signing in anonymously:", error);
-  });
+  // Fazer login com email e senha
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      const userId = user.uid; // Salva o userId após o login
+      console.log("Usuário logado:", user);
 
-// Load user data from Firebase
-function loadUserData() {
-  get(child(ref(database), `users/${userId}/points`))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        pontos = snapshot.val().pontos;
-        pontosElement.textContent = `${pontos} Pontos`;
-      } else {
-        console.log("No points data available");
-      }
+      // Salvar UID no localStorage
+      localStorage.setItem("userId", userId);
+
+      // Verifica se o usuário foi autenticado antes de redirecionar
+      console.log("Redirecionando para menu.html...");
+      window.location.href = 'assets/pages/menu/menu.html';  // Ajuste o caminho conforme necessário
     })
     .catch((error) => {
-      console.error(error);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error("Erro ao fazer login:", errorCode, errorMessage);
     });
-
-  get(child(ref(database), `users/${userId}/acertou`))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        acertou = snapshot.val().acertou;
-      } else {
-        console.log("No acertou data available");
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
-
-// Submit answer
-submitButton.addEventListener("click", function () {
-  const answer = answerInput.value.toLowerCase();
-  if (answer === "beijo") {
-    if (!acertou) {
-      resultElement.textContent = "Resposta correta!";
-      resultElement.style.color = "green";
-      // Save to Firebase
-      saveAnswer(answer);
-      // Update points
-      updatePoints();
-      // Mark as answered correctly
-      set(ref(database, `users/${userId}/acertou`), {
-        acertou: true,
-      });
-    } else {
-      resultElement.textContent = "Você já acertou este enigma amorr!";
-      resultElement.style.color = "blue";
-    }
-  } else {
-    resultElement.textContent = "Resposta incorreta. Tente novamente!";
-    resultElement.style.color = "red";
-  }
 });
 
-// Save answer to Firebase
-function saveAnswer(answer) {
-  const newAnswerRef = push(ref(database, `users/${userId}/answers`));
-  set(newAnswerRef, { answer });
-}
+// Verificar autenticação quando o estado mudar
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("Usuário está logado.");
+  } else {
+    console.log("Usuário não está logado.");
+  }
+});

@@ -1,83 +1,98 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-body{
-  background-color: #050505 ;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-
-  font-family: 'Poppins';
+body {
+  font-family: "Poppins", sans-serif;
   color: #fff;
 }
 
-nav{
-  display: flex;
-  justify-content: space-between;
-  gap: 6rem;
-  margin-top: 1rem;
-}
-
-.test{
-  color: #050505;
-}
-
-.icons-heart{
-  margin-top: 1rem;
-  width: 2rem;
-}
-
-.pontuacao{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-
-  padding: 0.3rem;
-
-  border: 0.2rem;
-  border-color: #fff;
-  border-style: solid;
-  border-radius: 0.5rem;
-}
-
-.pontuacao-img{
-  width: 1rem;
-  margin-right: 0.3rem;
-}
-
-.enigma-1{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 50%;
-
-  border: 0.3rem solid #fff;
-  border-radius: 0.5rem;
-
-  width: 20rem;
-  height: 2rem;
-
-  color: #fff;
-
+a {
   text-decoration: none;
 }
 
-.enigma-2{
+.login {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.formLogin{
+  display: flex;
   flex-direction: column;
   margin-top: 1rem;
+}
 
-  border: 0.3rem solid #fff;
-  border-radius: 0.5rem;
-
-  width: 20rem;
-  height: 2rem;
-
+.username, .password{
+  margin-bottom: .625rem;
+  margin-top: .4375rem;
+  width: 16rem;
+  border-radius: .125rem;
+  border:0;
+  border-bottom: .0625rem solid #727272;
+  background-color: #000;
   color: #fff;
+}
 
-  text-decoration: none;
+.submit{
+  margin-top: .625rem;
+  margin-bottom: 1rem;
+  width: 16rem;
+  height: 2rem;
+  border-radius: .1875rem;
+  border: 0;
+  background-color: #4528c4;
+  color: #fff;
+}
+
+
+.text {
+  color: #fff;
+}
+
+.src {
+  width: 21.875rem;
+  height: 21.875rem;
+  margin-right: 1rem;
+}
+
+.src2 {
+  width: 21.875rem;
+  height: 21.875rem;
+  margin-left: 1rem;
+}
+
+.center-2 {
+  margin-top: 8rem;
+}
+
+.inicio {
+  background-color: #fff;
+  color: #000;
+  font-size: 1.25rem;
+  padding: 0.625rem;
+  border-radius: 0.625rem;
+}
+
+@media screen and (max-width: 500px) {
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+  }
+
+  .center-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .src,
+  .src2 {
+    width: 4rem;
+    height: 4rem;
+  }
 }

@@ -1,19 +1,8 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInAnonymously,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {
-  child,
-  get,
-  getDatabase,
-  push,
-  ref,
-  set,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+import { child, get, getDatabase, push, ref, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
-// Your web app's Firebase configuration
+// Configuração do Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDZJvocXDQMXV77rnltyjtsnTm0Cz4vWR8",
   authDomain: "projeto-gr-7cd24.firebaseapp.com",
@@ -23,100 +12,84 @@ const firebaseConfig = {
   appId: "1:136857124362:web:c4167a542ccc7fca99a9f3",
 };
 
-// Initialize Firebase
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
+const auth = getAuth(app);
 const database = getDatabase(app);
 
-// Get elements
+// Obter elementos da página
 const answerInput = document.getElementById("resposta");
 const submitButton = document.getElementById("enviar");
 const resultElement = document.getElementById("result");
 const pontosElement = document.getElementById("pontos");
 
+const questionId = "question1"; // Identificador da pergunta
 let pontos = 0;
 let acertou = false;
-let userId = null;
+const userId = localStorage.getItem("userId");
 
-// Function to update points
-function updatePoints() {
-  pontos += 20;
-  pontosElement.textContent = `${pontos} Pontos`;
-  // Save points to Firebase
-  set(ref(database, `users/${userId}/points`), {
-    pontos: pontos,
-  });
-}
-
-// Sign in anonymously and load points
-signInAnonymously(auth)
-  .then(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        userId = user.uid;
-        loadUserData();
-      }
-    });
-  })
-  .catch((error) => {
-    console.error("Error signing in anonymously:", error);
-  });
-
-// Load user data from Firebase
+// Carregar dados do usuário do Firebase
 function loadUserData() {
-  get(child(ref(database), `users/${userId}/points`))
+  get(child(ref(database), `users/${userId}/questions/${questionId}`))
     .then((snapshot) => {
       if (snapshot.exists()) {
-        pontos = snapshot.val().pontos;
+        const data = snapshot.val();
+        pontos = data.pontos || 0;
+        acertou = data.acertou || false;
         pontosElement.textContent = `${pontos} Pontos`;
       } else {
-        console.log("No points data available");
+        console.log("Nenhum dado disponível para a pergunta");
       }
     })
     .catch((error) => {
-      console.error(error);
-    });
-
-  get(child(ref(database), `users/${userId}/acertou`))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        acertou = snapshot.val().acertou;
-      } else {
-        console.log("No acertou data available");
-      }
-    })
-    .catch((error) => {
-      console.error(error);
+      console.error("Erro ao carregar dados:", error);
     });
 }
 
-// Submit answer
-submitButton.addEventListener("click", function () {
+// Função para atualizar pontos
+function updatePoints() {
+  pontos += 40;
+  pontosElement.textContent = `${pontos} Pontos`;
+  set(ref(database, `users/${userId}/questions/${questionId}`), {
+    pontos,
+    acertou
+  })
+  .catch((error) => {
+    console.error("Erro ao atualizar pontos:", error);
+  });
+}
+
+
+// Verificar resposta do quiz
+submitButton.addEventListener("click", () => {
   const answer = answerInput.value.toLowerCase();
-  if (answer === "beijo") {
+  if (answer === "beija-flor") {
     if (!acertou) {
-      resultElement.textContent = "Eu";
+      resultElement.textContent = "Resposta correta!";
       resultElement.style.color = "green";
-      // Save to Firebase
       saveAnswer(answer);
-      // Update points
       updatePoints();
-      // Mark as answered correctly
-      set(ref(database, `users/${userId}/acertou`), {
-        acertou: true,
-      });
+      set(ref(database, `users/${userId}/questions/${questionId}`), { acertou: true });
     } else {
-      resultElement.textContent = "Eu";
+      resultElement.textContent = "Você já acertou este enigma!";
       resultElement.style.color = "blue";
     }
+    window.location.href = '../../pages/menu/menu.html';
   } else {
-    resultElement.textContent = "Resposta incorreta. Tente novamente!";
+    resultElement.textContent = "Resposta incorreta.";
     resultElement.style.color = "red";
   }
 });
 
-// Save answer to Firebase
+// Salvar resposta no Firebase
 function saveAnswer(answer) {
-  const newAnswerRef = push(ref(database, `users/${userId}/answers`));
+  const newAnswerRef = push(ref(database, `users/${userId}/questions/${questionId}/answers`));
   set(newAnswerRef, { answer });
+}
+
+// Carregar dados do usuário ao iniciar
+if (userId) {
+  loadUserData();
+} else {
+  console.error("Nenhum usuário autenticado.");
 }
